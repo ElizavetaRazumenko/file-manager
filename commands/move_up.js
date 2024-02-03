@@ -1,15 +1,19 @@
-import path, { resolve } from "path";
+import path from "path";
 import fs from "fs/promises";
 
 const moveUp = async (currDir) => {
-  let absolutePath = resolve(path.dirname(currDir));
+  const absoluteCurrPath = path.resolve(currDir);
+  const parentDir = path.dirname(absoluteCurrPath);
+
+  if (parentDir === absoluteCurrPath) return absoluteCurrPath;
+
   try {
-    const statistics = await fs.stat(absolutePath);
-    if (statistics.isDirectory()) {
-      return absolutePath;
+    const stats = await fs.stat(parentDir);
+    if (stats.isDirectory()) {
+      return parentDir;
     }
-  } catch (error) {
-    throw new Error(error.message);
+  } catch {
+    console.log("Operation failed");
   }
 };
 

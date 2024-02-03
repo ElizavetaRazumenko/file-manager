@@ -1,6 +1,8 @@
 import os from "os";
 import readline from "readline";
+import util from "util";
 import printDirInfo from "../utils/print_dir_info.js";
+import commandsListener from "../commands/commands_listener.js";
 
 const userArg = process.argv.filter(
   (arg) => arg.startsWith("--") && arg.includes("username")
@@ -8,22 +10,38 @@ const userArg = process.argv.filter(
 
 const userName = userArg.length ? userArg[0].split("=")[1] : "Unknown user";
 
-const readlineInterface = readline.createInterface({
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-const startTheProgram = async () => {
-  console.log(`Welcome to the File Manager, ${userName}!`);
-  printDirInfo(os.homedir());
-};
-
 const endTheProgram = () => {
-  console.log(`\n Thank you for using File Manager, ${userName}, goodbye! \n`);
-  readlineInterface.close();
+  console.log(`\nThank you for using File Manager, ${userName}, goodbye! \n`);
+  rl.close();
   process.exit();
 };
 
-readlineInterface.on("SIGINT", endTheProgram);
+rl.on("SIGINT", endTheProgram);
+
+const startTheProgram = async () => {
+  console.log(`Welcome to the File Manager, ${userName}!`);
+  printDirInfo(os.homedir());
+
+  while (true) {
+    try {
+      const userInputValue = await util
+        .promisify(rl.question)
+        .call(rl, "Enter the command into the console \n");
+
+      const [userCommand, ...userArgs] = userInputValue.split(" ");
+
+      userCommand === "exit" || userCommand === ".exit"
+        ? endTheProgram()
+        : await commandsListener(userCommand, userArgs);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+};
 
 startTheProgram();
