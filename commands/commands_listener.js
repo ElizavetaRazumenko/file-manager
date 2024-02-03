@@ -2,6 +2,7 @@ import { homedir } from "os";
 import printDirInfo from "../utils/print_dir_info.js";
 import moveUp from "../commands/move_up.js";
 import changeDirectory from "../commands/change_directory.js";
+import printListOfFiles from "../commands/print_list_of_files.js";
 
 let currentDir = homedir();
 
@@ -18,6 +19,10 @@ const commandsListener = async (command, args) => {
       args[0]
         ? (currentDir = await changeDirectory(currentDir, args[0]))
         : console.log(invalidArgsMessage);
+      break;
+    case "ls":
+      const listInfo = await printListOfFiles(currentDir);
+      console.table(listInfo);
       break;
     default:
       console.log(invalidMessage);
