@@ -13,8 +13,9 @@ const moveUp = async (currDir) => {
       return parentDir;
     }
   } catch {
-    console.log("Operation failed");
+    console.log("\nOperation failed\n");
   }
+  return currDir;
 };
 
 export default moveUp;

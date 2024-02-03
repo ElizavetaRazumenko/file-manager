@@ -39,7 +39,7 @@ const startTheProgram = async () => {
         ? endTheProgram()
         : await commandsListener(userCommand, userArgs);
     } catch (e) {
-      console.error(e);
+      console.error(e.message);
     }
   }
 };
