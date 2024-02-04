@@ -10,3 +10,6 @@ The file manager can do the following:
 - Get information about the host machine operating system
 - Perform hash calculations
 - Compress and decompress files
+
+To start, clone yourself and use the script: 
+`npm run start -- --username=your_username`
