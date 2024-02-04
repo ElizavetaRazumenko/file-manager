@@ -10,8 +10,10 @@ import renameFile from "../commands/rename_file.js";
 import copyFile from "../commands/copy_file.js";
 import moveFile from "../commands/move_file.js";
 import removeFile from "../commands/remove_file.js";
-import osCommandsChecker from "../commands/os_commands_checker.js";
+import osCommandsListener from "./os_commands_listener.js";
 import hashCalc from "../commands/hash_calc.js";
+import compressFile from "../commands/compress_file.js";
+import decompressFile from "../commands/decompress_file.js";
 
 let currentDir = homedir();
 
@@ -57,10 +59,20 @@ const commandsListener = async (command, args) => {
       args[0] ? await removeFile(args[0]) : console.log(invalidArgsMessage);
       break;
     case "os":
-      args[0] ? osCommandsChecker(args[0]) : console.log(invalidArgsMessage);
+      args[0] ? osCommandsListener(args[0]) : console.log(invalidArgsMessage);
       break;
     case "hash":
       args[0] ? await hashCalc(args[0]) : console.log(invalidArgsMessage);
+      break;
+    case "compress":
+      args[0] && args[1]
+        ? await compressFile(args[0], args[1])
+        : console.log(invalidArgsMessage);
+      break;
+    case "decompress":
+      args[0] && args[1]
+        ? await decompressFile(args[0], args[1])
+        : console.log(invalidArgsMessage);
       break;
     default:
       console.log(invalidMessage);

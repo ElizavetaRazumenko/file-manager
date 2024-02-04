@@ -2,7 +2,7 @@ import { invalidArgOSMessage } from "../utils/messages.js";
 import getHostMachineInfo from "./get_host_machine_info.js";
 import os from "os";
 
-const osCommandsChecker = (command) => {
+const osCommandsListener = (command) => {
   try {
     switch (command) {
       case "--EOL":
@@ -28,4 +28,4 @@ const osCommandsChecker = (command) => {
   }
 };
 
-export default osCommandsChecker;
+export default osCommandsListener;
