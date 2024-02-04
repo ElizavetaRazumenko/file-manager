@@ -11,5 +11,5 @@ The file manager can do the following:
 - Perform hash calculations
 - Compress and decompress files
 
-To start, clone yourself and use the script: 
+To run, use the script: 
 `npm run start -- --username=your_username`
