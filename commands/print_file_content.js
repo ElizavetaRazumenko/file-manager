@@ -1,9 +1,10 @@
+import { homedir } from "os";
 import fs from "fs";
 import path from "path";
 
-const printFileContent = async (currentDir, pathFoFile) => {
+const printFileContent = async (pathFoFile) => {
   try {
-    const currPath = path.resolve(currentDir, pathFoFile);
+    const currPath = path.resolve(homedir(), pathFoFile);
 
     await new Promise((res, rej) => {
       const readableStream = fs.createReadStream(currPath, "utf-8");
@@ -14,7 +15,7 @@ const printFileContent = async (currentDir, pathFoFile) => {
       });
 
       readableStream.on("end", () => {
-        console.log(data);
+        console.log(`\n${data}\n`);
         res();
       });
 
