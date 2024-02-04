@@ -3,7 +3,7 @@ import fs from "fs";
 import { homedir } from "os";
 import { pipeline } from "stream";
 
-const copyFile = async (pathToFile, pathToCopy) => {
+const moveFile = async (pathToFile, pathToCopy) => {
   try {
     const absoluteCurrPath = path.resolve(homedir(), pathToFile);
     const fileName = path.basename(absoluteCurrPath);
@@ -12,9 +12,10 @@ const copyFile = async (pathToFile, pathToCopy) => {
     const writableStream = fs.createWriteStream(absoluteCopyPath);
 
     await new Promise((res, rej) => {
-      pipeline(readableStream, writableStream, (err) => {
+      pipeline(readableStream, writableStream, async (err) => {
         if (err) rej(new Error());
-        console.log("\nFile copied successfully\n");
+        await fs.promises.unlink(absoluteCurrPath);
+        console.log("\nFile transferred successfully\n");
         res();
       });
     });
@@ -23,4 +24,4 @@ const copyFile = async (pathToFile, pathToCopy) => {
   }
 };
 
-export default copyFile;
+export default moveFile;

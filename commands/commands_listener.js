@@ -8,6 +8,8 @@ import printFileContent from "../commands/print_file_content.js";
 import createNewFile from "../commands/create_new_file.js";
 import renameFile from "../commands/rename_file.js";
 import copyFile from "../commands/copy_file.js";
+import moveFile from "../commands/move_file.js";
+import removeFile from '../commands/remove_file.js';
 
 let currentDir = homedir();
 
@@ -43,6 +45,16 @@ const commandsListener = async (command, args) => {
     case "cp":
       args[0] && args[1]
         ? await copyFile(args[0], args[1])
+        : console.log(invalidArgsMessage);
+      break;
+    case "mv":
+      args[0] && args[1]
+        ? await moveFile(args[0], args[1])
+        : console.log(invalidArgsMessage);
+      break;
+    case "rm":
+      args[0]
+        ? await removeFile(args[0])
         : console.log(invalidArgsMessage);
       break;
     default:
