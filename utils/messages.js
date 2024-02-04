@@ -3,3 +3,6 @@ export const invalidMessage =
 
 export const invalidArgsMessage =
   "\nInvalid input. Required arguments missing!\n";
+
+export const invalidArgOSMessage =
+  "\nInvalid input. The argument is incorrect!\n";

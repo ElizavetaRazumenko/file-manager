@@ -27,7 +27,7 @@ const printListOfFiles = async (currDir) => {
     );
     files.forEach((file) => tableData.push({ Name: file, Type: "File" }));
 
-    return tableData;
+    console.table(tableData);
   } catch {
     console.log("\nOperation failed\n");
   }

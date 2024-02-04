@@ -9,7 +9,8 @@ import createNewFile from "../commands/create_new_file.js";
 import renameFile from "../commands/rename_file.js";
 import copyFile from "../commands/copy_file.js";
 import moveFile from "../commands/move_file.js";
-import removeFile from '../commands/remove_file.js';
+import removeFile from "../commands/remove_file.js";
+import osCommandsChecker from "../commands/os_commands_checker.js";
 
 let currentDir = homedir();
 
@@ -24,8 +25,7 @@ const commandsListener = async (command, args) => {
         : console.log(invalidArgsMessage);
       break;
     case "ls":
-      const listInfo = await printListOfFiles(currentDir);
-      console.table(listInfo);
+      await printListOfFiles(currentDir);
       break;
     case "cat":
       args[0]
@@ -53,8 +53,11 @@ const commandsListener = async (command, args) => {
         : console.log(invalidArgsMessage);
       break;
     case "rm":
+      args[0] ? await removeFile(args[0]) : console.log(invalidArgsMessage);
+      break;
+    case "os":
       args[0]
-        ? await removeFile(args[0])
+        ? osCommandsChecker(args[0])
         : console.log(invalidArgsMessage);
       break;
     default:
