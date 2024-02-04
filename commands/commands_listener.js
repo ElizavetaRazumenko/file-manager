@@ -11,6 +11,7 @@ import copyFile from "../commands/copy_file.js";
 import moveFile from "../commands/move_file.js";
 import removeFile from "../commands/remove_file.js";
 import osCommandsChecker from "../commands/os_commands_checker.js";
+import hashCalc from "../commands/hash_calc.js";
 
 let currentDir = homedir();
 
@@ -56,9 +57,10 @@ const commandsListener = async (command, args) => {
       args[0] ? await removeFile(args[0]) : console.log(invalidArgsMessage);
       break;
     case "os":
-      args[0]
-        ? osCommandsChecker(args[0])
-        : console.log(invalidArgsMessage);
+      args[0] ? osCommandsChecker(args[0]) : console.log(invalidArgsMessage);
+      break;
+    case "hash":
+      args[0] ? await hashCalc(args[0]) : console.log(invalidArgsMessage);
       break;
     default:
       console.log(invalidMessage);
