@@ -1,17 +1,16 @@
-import { homedir } from "os";
 import path from "path";
 import fs from "fs/promises";
 import { constants } from "fs";
 
-const renameFile = async (pathToFile, fileName) => {
+const renameFile = async (currentDir, pathToFile, fileName) => {
   try {
-    const absoluteCurrPath = path.resolve(homedir(), pathToFile);
+    const absoluteCurrPath = path.resolve(currentDir, pathToFile);
     await fs.access(absoluteCurrPath, constants.F_OK);
 
     const folderPath = path.dirname(absoluteCurrPath);
     const newFilePath = path.resolve(folderPath, fileName);
     await fs.rename(absoluteCurrPath, newFilePath);
-    console.log('The file was successfully renamed');
+    console.log('\nThe file was successfully renamed\n');
   } catch {
     console.log("\nOperation failed\n");
   }

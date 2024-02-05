@@ -1,10 +1,9 @@
 import path from "path";
 import fs from "fs/promises";
-import { homedir } from "os";
 
-const removeFile = async (pathToFile) => {
+const removeFile = async (currentDir, pathToFile) => {
   try {
-    const absoluteCurrPath = path.resolve(homedir(), pathToFile);
+    const absoluteCurrPath = path.resolve(currentDir, pathToFile);
     await fs.unlink(absoluteCurrPath);
     console.log("\nThe file was successfully deleted\n");
   } catch {

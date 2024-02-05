@@ -1,13 +1,12 @@
 import path from "path";
 import zlib from "zlib";
 import fs from "fs";
-import { homedir } from "os";
 import { pipeline } from "stream/promises";
 
-const decompressFile = async (pathToCompressFile, pathToFile) => {
+const decompressFile = async (currentDir, pathToCompressFile, pathToFile) => {
   try {
     const absolutePathToCompressFile = path.resolve(
-      homedir(),
+      currentDir,
       pathToCompressFile
     );
 
@@ -16,7 +15,7 @@ const decompressFile = async (pathToCompressFile, pathToFile) => {
       path.extname(absolutePathToCompressFile)
     );
 
-    const absolutePathToFile = path.resolve(homedir(), pathToFile, fileName);
+    const absolutePathToFile = path.resolve(currentDir, pathToFile, fileName);
 
     const readableStream = fs.createReadStream(absolutePathToCompressFile);
     const writableStream = fs.createWriteStream(absolutePathToFile);

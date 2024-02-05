@@ -1,13 +1,15 @@
 import path from "path";
-import fs from "fs";
-import { homedir } from "os";
+import fs, { constants }  from "fs";
 import { pipeline } from "stream";
 
-const moveFile = async (pathToFile, pathToCopy) => {
+const moveFile = async (currentDir, pathToFile, pathToCopy) => {
   try {
-    const absoluteCurrPath = path.resolve(homedir(), pathToFile);
+    const absoluteCurrPath = path.resolve(currentDir, pathToFile);
     const fileName = path.basename(absoluteCurrPath);
-    const absoluteCopyPath = path.resolve(homedir(), pathToCopy, fileName);
+
+    await fs.promises.access(absoluteCurrPath, constants.F_OK);
+
+    const absoluteCopyPath = path.resolve(currentDir, pathToCopy, fileName);
     const readableStream = fs.createReadStream(absoluteCurrPath, "utf-8");
     const writableStream = fs.createWriteStream(absoluteCopyPath);
 

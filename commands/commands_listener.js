@@ -32,7 +32,7 @@ const commandsListener = async (command, args) => {
       break;
     case "cat":
       args[0]
-        ? await printFileContent(args[0])
+        ? await printFileContent(currentDir, args[0])
         : console.log(invalidArgsMessage);
       break;
     case "add":
@@ -42,36 +42,36 @@ const commandsListener = async (command, args) => {
       break;
     case "rn":
       args[0] && args[1]
-        ? await renameFile(args[0], args[1])
+        ? await renameFile(currentDir, args[0], args[1])
         : console.log(invalidArgsMessage);
       break;
     case "cp":
       args[0] && args[1]
-        ? await copyFile(args[0], args[1])
+        ? await copyFile(currentDir, args[0], args[1])
         : console.log(invalidArgsMessage);
       break;
     case "mv":
       args[0] && args[1]
-        ? await moveFile(args[0], args[1])
+        ? await moveFile(currentDir, args[0], args[1])
         : console.log(invalidArgsMessage);
       break;
     case "rm":
-      args[0] ? await removeFile(args[0]) : console.log(invalidArgsMessage);
+      args[0] ? await removeFile(currentDir, args[0]) : console.log(invalidArgsMessage);
       break;
     case "os":
       args[0] ? osCommandsListener(args[0]) : console.log(invalidArgsMessage);
       break;
     case "hash":
-      args[0] ? await hashCalc(args[0]) : console.log(invalidArgsMessage);
+      args[0] ? await hashCalc(currentDir, args[0]) : console.log(invalidArgsMessage);
       break;
     case "compress":
       args[0] && args[1]
-        ? await compressFile(args[0], args[1])
+        ? await compressFile(currentDir, args[0], args[1])
         : console.log(invalidArgsMessage);
       break;
     case "decompress":
       args[0] && args[1]
-        ? await decompressFile(args[0], args[1])
+        ? await decompressFile(currentDir, args[0], args[1])
         : console.log(invalidArgsMessage);
       break;
     default:

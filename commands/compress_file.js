@@ -1,16 +1,15 @@
 import path from "path";
 import zlib from "zlib";
 import fs from "fs";
-import { homedir } from "os";
 import { pipeline } from "stream/promises";
 
-const compressFile = async (pathToFile, pathToCompressFile) => {
+const compressFile = async (currentDir, pathToFile, pathToCompressFile) => {
   try {
-    const absolutePathToFile = path.resolve(homedir(), pathToFile);
+    const absolutePathToFile = path.resolve(currentDir, pathToFile);
     const fileName = path.basename(absolutePathToFile);
 
     const absolutePathToCompressFile = path.resolve(
-      homedir(),
+      currentDir,
       pathToCompressFile,
       `${fileName}.br`
     );
